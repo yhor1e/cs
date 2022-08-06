@@ -1,14 +1,27 @@
 import type { NextPage } from 'next';
-import dynamic from 'next/dynamic';
-//import { Editor } from '../components/Editor';
-const Editor = dynamic(() => import('../components/Editor'), {
-  ssr: false,
-});
+import Editor, { Monaco } from '@monaco-editor/react';
+
+//@ts-ignore
+function handleEditorMount(editor) {
+  console.log(editor);
+  editor.onDidBlurEditorText(() => console.log('on blur event', editor.getValue()));
+}
 
 const Next: NextPage = () => {
   return (
     <div>
-      <Editor />
+      <Editor
+        height="30vh"
+        defaultLanguage="javascript"
+        defaultValue="// some comment"
+        onMount={handleEditorMount}
+      />
+      <Editor
+        height="30vh"
+        defaultLanguage="javascript"
+        defaultValue="// some comment"
+        onMount={handleEditorMount}
+      />
     </div>
   );
 };
